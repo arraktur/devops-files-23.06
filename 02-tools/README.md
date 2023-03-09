@@ -59,7 +59,7 @@
 
 ### Vagrant
 - [Vagrant образы](https://app.vagrantup.com/boxes/search)
-- [Документация](https://www.vagrantup.com/docs/)
+- [Документация](https://developer.hashicorp.com/vagrant/docs)
 - [Примеры конфигураций](https://github.com/patrickdlee/vagrant-examples)
 - [Инструкция по сборке базового образа](https://www.vagrantup.com/docs/boxes/base.html)
 - [Утилита Packer](https://www.packer.io)
