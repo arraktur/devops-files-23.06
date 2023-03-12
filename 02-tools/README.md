@@ -30,7 +30,7 @@
 
 
 &nbsp;
-- Создайте и опубликуйте на [Vagrant Cloud](https://vagrantcloud.com/) образ Vagrant, удовлетворяющий требованиям:
+- Создайте и опубликуйте на [Vagrant Cloud](https://app.vagrantup.com/) образ Vagrant, удовлетворяющий требованиям:
   - Основан на centos/8
   - Включает установленный apache2
   - Включает установленный php
