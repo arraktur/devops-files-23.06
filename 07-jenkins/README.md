@@ -8,6 +8,8 @@ export CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
 ```
 либо добавить параметр `-Dcasc.jenkins.config=${JENKINS_HOME}/casc_configs` в `JAVA_ARGS` systemd сервиса Jenkins.
 
+лобо в JENKINS_HOME создать файл jenkins.yaml с конфигурацией
+
 Пример конфигурации для плагина Configuration as code:
 
 ```yml
