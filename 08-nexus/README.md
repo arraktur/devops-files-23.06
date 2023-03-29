@@ -41,7 +41,7 @@ fi
 
 # Домашнее задание 6
 
-- Добавьте к Vagrantfile еще 3 машины:
+- Добавьте к Vagrantfile из прошлого домашнего задания еще 3 машины:
   - nexus.vm
   - staging.vm
   - production.vm
