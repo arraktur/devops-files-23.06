@@ -11,3 +11,4 @@
 - [Домашнее задание 9](12-docker-compose/README.md#домашнее-задание-9) (docker-compose)
 - [Домашнее задание 10](13-github-actions/README.md#домашнее-задание-10) (github-actions)
 - [Домашнее задание 11](14-kubernetes/README.md#домашнее-задание-11) (kubernetes)
+- [Домашнее задание 12](15-helm/README.md#домашнее-задание-12) (helm)

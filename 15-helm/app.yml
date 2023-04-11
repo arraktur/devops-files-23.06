@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing
+  template:
+    metadata:
+      labels:
+        app: billing
+    spec:
+      serviceAccountName: vault-demo
+      initContainers:
+      - name: check-db-ready
+        image: postgres:9.6
+        command:
+        - sh
+        - -c
+        - until pg_isready -h postgres -p 5432; do echo database is not ready; sleep 2; done;
+      
+      - name: create-table
+        image: postgres:9.6
+        env:
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: db
+        command:
+        - sh
+        - -c
+        args:
+        - PGPASSWORD=$DB_PASSWORD psql -h postgres -p 5432 -w -d $DB_NAME -U $DB_USER
+          -c 'CREATE TABLE IF NOT EXISTS transactions (id serial PRIMARY KEY, client_id
+          varchar(100), amount integer);'
+      containers:
+      - name: billing
+        image: feniks/billing-app:v1-original
+        env:
+        - name: DEBUG
+          value: "True"
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: db
+        - name: DATABASE_URL
+          value: postgresql://${DB_USER}:${DB_PASSWORD}@postgres/${DB_NAME}
