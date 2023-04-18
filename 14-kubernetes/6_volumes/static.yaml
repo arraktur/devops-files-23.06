@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static
+  template:
+    metadata:
+      labels:
+        app: static
+    spec:
+      containers:
+        - name: static
+          image: static:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static
+spec:
+  selector:
+    app: static
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http

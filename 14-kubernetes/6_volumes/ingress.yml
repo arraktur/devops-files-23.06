@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: sites.test.local
+    http:
+      paths: 
+      - path: /static
+        pathType: Prefix 
+        backend:
+          service:
+            name: nginx
+            port:
+              name: static-svc
+      - path: /dynamic
+        pathType: Prefix 
+        backend:
+          service:
+            name: nginx
+            port:
+              name: dynamic-svc

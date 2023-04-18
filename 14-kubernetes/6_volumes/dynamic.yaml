@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dynamic
+  template:
+    metadata:
+      labels:
+        app: dynamic
+    spec:
+      containers:
+        - name: dynamic
+          image: dynamic:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamic
+spec:
+  selector:
+    app: dynamic
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
