@@ -1,0 +1,10 @@
+replicas: 1
+
+image:
+  repository: api-server
+  tag: v2
+
+ingress:
+  host: sites-dev.test.local
+  path: /
+  pathType: Prefix 

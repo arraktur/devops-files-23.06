@@ -1,0 +1,20 @@
+replicas: 2
+service:
+  port: 8090
+  name: api-server
+  protocol: TCP
+
+container:
+  port: 8080
+  label: server
+  portName: http
+  name: server
+
+image:
+  repository: api-server
+  tag: v1
+
+ingress:
+  host: sites.test.local
+  path: /svc1 
+  pathType: Prefix 

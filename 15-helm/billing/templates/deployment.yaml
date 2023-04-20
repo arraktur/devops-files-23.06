@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dummy.fullname" . }}
+  labels:
+    {{- include "dummy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dummy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "dummy.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "dummy.serviceAccountName" . }}
+      initContainers:
+      - name: check-db-ready
+        image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+        command:
+        - sh
+        - -c
+        - until pg_isready -h {{ .Values.postgresql.fullnameOverride }} -p 5432; do echo database is not ready; sleep 2; done;
+      
+      - name: create-table
+        image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+        env:
+        - name: DB_USER
+          value: {{ .Values.postgresql.global.postgresql.auth.username }}
+        - name: DB_PASSWORD
+          value: {{ .Values.postgresql.global.postgresql.auth.password }}
+        - name: DB_NAME
+          value: {{ .Values.postgresql.global.postgresql.auth.database }}
+        command:
+        - sh
+        - -c
+        args:
+        - PGPASSWORD=$DB_PASSWORD psql -h {{ .Values.postgresql.fullnameOverride }} -p 5432 -w -d $DB_NAME -U $DB_USER
+          -c 'CREATE TABLE IF NOT EXISTS transactions (id serial PRIMARY KEY, client_id
+          varchar(100), amount integer);'
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+          - name: DEBUG
+            value: "True"
+          - name: DB_USER
+            value: {{ .Values.postgresql.global.postgresql.auth.username }}
+          - name: DB_PASSWORD
+            value: {{ .Values.postgresql.global.postgresql.auth.password }}
+          - name: DB_NAME
+            value: {{ .Values.postgresql.global.postgresql.auth.database }}
+          - name: DATABASE_URL
+            value: postgresql://${DB_USER}:${DB_PASSWORD}@postgres/${DB_NAME}
+         
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
