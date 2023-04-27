@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-dep3
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: helloworld
+        image: karthequian/helloworld:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      # tolerations:
+      # - key: "app"
+      #   operator: "Equal"
+      #   value: "helloword"
+      #   effect: "NoSchedule"
