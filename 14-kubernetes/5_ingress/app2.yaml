@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: server:v2
+          image: api-server:v2
 
 ---
 apiVersion: v1
