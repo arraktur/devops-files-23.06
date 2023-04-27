@@ -2,11 +2,19 @@ apiVersion: v1
 entries:
   demo:
   - apiVersion: v2
+    appVersion: "2.2"
+    created: "2023-04-27T20:56:54.64797+03:00"
+    digest: a2b7db8d3d327ddfa8b1a4585362c2e39f6918929d95b6415adea700fe60526f
+    name: demo
+    urls:
+    - https://fenikks.github.io/devops-files-23.06/charts/demo-4.0.0.tgz
+    version: 4.0.0
+  - apiVersion: v2
     appVersion: "2.0"
-    created: "2023-04-27T20:50:46.2772092+03:00"
+    created: "2023-04-27T20:56:54.6468818+03:00"
     digest: e94b2d9dafb8985dc80d03118d0fec2ab7b6e637d03c1cd1e08be9a8198df5bf
     name: demo
     urls:
     - https://fenikks.github.io/devops-files-23.06/charts/demo-3.0.0.tgz
     version: 3.0.0
-generated: "2023-04-27T20:50:46.2766789+03:00"
+generated: "2023-04-27T20:56:54.6454413+03:00"
