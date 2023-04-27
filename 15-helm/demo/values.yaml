@@ -12,7 +12,7 @@ container:
 
 image:
   repository: api-server
-  tag: v1
+  tag: ""
 
 ingress:
   host: sites.test.local

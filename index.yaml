@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  demo:
+  - apiVersion: v2
+    appVersion: "2.0"
+    created: "2023-04-27T20:43:13.8467946+03:00"
+    digest: e94b2d9dafb8985dc80d03118d0fec2ab7b6e637d03c1cd1e08be9a8198df5bf
+    name: demo
+    urls:
+    - charts/demo-3.0.0.tgz
+    version: 3.0.0
+generated: "2023-04-27T20:43:13.8428065+03:00"
