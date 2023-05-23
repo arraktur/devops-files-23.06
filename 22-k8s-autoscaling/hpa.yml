@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: server-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: serverpi
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target: 
+        type: AverageValue
+        averageValue: 50m
+  - type: Resource
+    resource:
+      name: memory
+      target: 
+        type: AverageValue
+        averageValue: 200Mi
+        

@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serverpi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: serverpi
+  template:
+    metadata:
+      labels:
+        app: serverpi
+    spec:
+      containers:
+        - name: serverpi
+          image: feniks/server-pi:1.0
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+            limits:
+              # cpu: "1"
+              cpu: "100m"
+              memory: 300Mi
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serverpi
+spec:
+  selector:
+    app: serverpi
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
